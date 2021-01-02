@@ -21,4 +21,9 @@ Imports:
     yaml,
     glue,
     tidyr,
-    here
+    here,
+    magrittr,
+    kableExtra,
+    knitr
+Suggests: 
+    testthat
