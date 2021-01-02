@@ -1,4 +1,16 @@
-Package: Songs
-Title: A Collection Of Songs
+Package: Songbookdown
+Title: A Thin Wrapper Around Bookdown to Create Songbooks
 Version: 0.0.0.9000
-
+Authors@R: 
+    person(given = "Nils",
+           family = "Ratnaweera",
+           role = c("aut", "cre"),
+           email = "nils@ratnaweera.net")
+Description: This package provides functionality to easily create a Songbook.
+  It relies heavily on bookdown, which itself relies on knitr and pandoc to 
+  create a variaty of output formats, ranging from html over pdf to docx and epub.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
