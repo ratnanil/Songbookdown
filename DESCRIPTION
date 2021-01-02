@@ -1,4 +1,4 @@
-Package: Songbookdown
+Package: songbookdown
 Title: A Thin Wrapper Around Bookdown to Create Songbooks
 Version: 0.0.0.9000
 Authors@R: 
