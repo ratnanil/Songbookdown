@@ -1,0 +1,7 @@
+inputdir: songs_raw
+filetypes: [txt, cho, rmd]
+subfolders: 
+  evergreens:
+    title: Beautiful evergreens
+  christmas:
+    title: Christmas Songs

@@ -1,0 +1,7 @@
+--- 
+title: "Songs"
+pagetitle: "Songs"
+site: bookdown::bookdown_site
+documentclass: book
+link-citations: yes
+---

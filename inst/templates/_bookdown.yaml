@@ -1,0 +1,4 @@
+delete_merged_file: true
+output_dir: docs
+download: ["pdf"]
+rmd_subdir: 02_songs_output
