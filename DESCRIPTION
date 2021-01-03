@@ -1,5 +1,5 @@
 Package: songbookdown
-Title: A Thin Wrapper Around Bookdown to Create Songbooks
+Title: An easy and flexible way to create songbooks
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Nils",
@@ -21,7 +21,6 @@ Imports:
     yaml,
     glue,
     tidyr,
-    here,
     magrittr,
     kableExtra,
     knitr
