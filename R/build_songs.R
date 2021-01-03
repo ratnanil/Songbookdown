@@ -1,35 +1,16 @@
-# Transform all songs in songs_txt into markdown files
-
-# library(magrittr)
-
-
-
 ################################################################################
 ## Songs to RMarkdown ##########################################################
 ################################################################################
 
 
-## Functions ###################################################################
+## Helper Functions ############################################################
 
-#' Get yaml header poition
-#'
-#' Gets the position of the yaml inline header by searching for the first 
-#' two occurences of "---" (three or more dashes accepted)
-#' @param input a character vector 
-#'
-#' @return an integer vector of legnth 2
+# get the position of the yaml header
 yaml_headerpos <- function(input){
   which(stringr::str_detect(input, "---+"))[1:2]
 }
 
-#' Read yaml header
-#' 
-#' Reads a yaml header from a text file or character vector (latter is the output of \code{readLines()})
-#'
-#' @param input Path to a text file (if \code{isfile} is \code{TRUE}) or a character vector (output from \code{readLines()})
-#' @param isfile boolean, indicating whether \code{input} is a file or a character vector
-#'
-#' @return A named list
+# Reads the yaml header and imports as a named list
 read_yamlheader <- function(input,isfile = TRUE){
   if(isfile) input <- readLines(input)
   start_stop <- yaml_headerpos(input)
@@ -37,6 +18,7 @@ read_yamlheader <- function(input,isfile = TRUE){
   yamldata
 }
 
+# removes the yaml header from a text file or character vector
 remove_yamlheader <- function(input,isfile = TRUE){
   if(isfile) input <- readLines(input)
   start_stop <- yaml_headerpos(input)
@@ -62,11 +44,12 @@ trim_lines <- function(char_vec, compare = ""){
   char_vec[!(leading | trailing)]
 }
 
+# Pads an integer with a specified number of zeros and adds an underscore
 mypad <- function(input, by){
   paste0(stringr::str_pad(input,by,pad = "0"),"_")
 }
 
-
+# Creates an html or latex glossary
 create_glossary <- function(df, output_type){
   if(output_type == "html"){
     df %>%
@@ -87,6 +70,7 @@ create_glossary <- function(df, output_type){
   }
 }
 
+# creates an RMarkdown chunk where a glossary can be inserted
 glossary_chunk <- function(output_type,glossary){
   c(
     "",
@@ -97,11 +81,13 @@ glossary_chunk <- function(output_type,glossary){
   )
 }
 
+# combines `create_glossary` and `glossary_chunk`
 glossary_chunk_full <- function(df, output_type){
   glossary <- create_glossary(df, output_type)
   glossary_chunk(output_type,glossary)
 }
 
+# set's a default value if the value is not specified yet (and is therfore NULL)
 default_if_null <- function(input,default){
   if(is.null(input)){
     default
@@ -110,6 +96,9 @@ default_if_null <- function(input,default){
   }
 }
 
+# Takes a character matching either "true" or "false" (case insensitive) and
+# turns it into a real R Boolean (TRUE or FALSE). Throws and error if the input
+# is ambiguous 
 char_to_bool <- function(input){
   istrue <- stringr::str_detect(input, stringr::regex("true", ignore_case = T))
   isfalse <- stringr::str_detect(input, stringr::regex("false", ignore_case = T))
@@ -117,30 +106,30 @@ char_to_bool <- function(input){
   if(istrue & !isfalse) TRUE else if(isfalse & !istrue) FALSE else stop("value is neither true nor false")
 }
 
-
-
-
-
-
 #' Create the rmd files
 #'
 #' @param input a folder
-#' @param songbook_yamlfile the songbook yaml file containing the songbook metadata
-#' @param bookdown_yamlfile the bookdown yaml file containing the bookdown metadata
+#' @param songbook_yamlfile,bookdown_yamlfile the songbook- / bookdown- yamlfile containing
+#'   yaml the songbook metadata. Must be relative to the input.
 #'
 #' @return A batch of Rmd Files which can be used to create the songbook.
 #' @export
 create_inputfiles <- function(
-  input = ".",
-  songbook_yamlfile = file.path(input,"_songbookdown.yml"),
-  bookdown_yamlfile = file.path(input,"_bookdown.yml")){
+  input = getwd(),
+  songbook_yamlfile = list.files(pattern = "_songbookdown.ya*ml"), 
+  bookdown_yamlfile = list.files(pattern = "_bookdown.ya*ml")  
+  ){
   
   ## Get settings from yaml ####################################################
   
+  print(paste("reading",songbook_yamlfile))
+  print(file.exists(songbook_yamlfile))
   songbookdownyaml <- yaml::read_yaml(songbook_yamlfile)
   bookdownyaml <- yaml::read_yaml(bookdown_yamlfile)
   
-  setwd(input)
+  # https://github.com/rstudio/bookdown/blob/92c59d32ecb46aa8cb7150ba1139621705e23901/R/render.R#L69
+  # https://r-pkgs.org/r.html?q=www#restore-state-with-baseon.exit
+  owd = setwd(input); on.exit(setwd(owd), add = TRUE)
   
   rmd_subdir <- bookdownyaml$rmd_subdir
   output_dir <- bookdownyaml$output_dir
@@ -161,28 +150,26 @@ create_inputfiles <- function(
   
   if(cleansubdir){for (file in list.files(rmd_subdir,full.names = TRUE)){
     file.remove(file)}
-    }
+  }
   
-  subfolders_dfr <- purrr::map_dfr(subfolders,function(chapter,folder){
+  subfolders_dfr <- purrr::imap_dfr(subfolders,function(chapter,folder){
     dplyr::tibble(chapter = chapter[[1]],
-           folder = folder)
+                  folder = folder)
   }) %>%
     dplyr::mutate(i = dplyr::row_number())
   
   
   ## Edit Lines ################################################################
-  
-  
-  allfiles <- purrr::map_dfr(subfolders_dfr, function(chapter,folder,i){
+
+  allfiles <- purrr::pmap_dfr(subfolders_dfr, function(chapter,folder,i){
     fullpath <- file.path(inputdir,folder) %>%
       list.files(pattern = paste(filetypes,collapse = "|"),full.names = TRUE)
     
     mylines <- purrr::map(fullpath, ~readLines(.x,warn = FALSE))
     
     dplyr::tibble(fullpath = fullpath, 
-           folder = folder, chapter = chapter, chapter_i = i, lines = mylines) 
+                  folder = folder, chapter = chapter, chapter_i = i, lines = mylines) 
   }) 
-  
   
   metadata_dfr <- purrr::map_dfr(allfiles$lines, function(x){
     x %>%
@@ -190,6 +177,10 @@ create_inputfiles <- function(
       dplyr::as_tibble() %>%
       dplyr::mutate_all(~as.character(.))
   })
+  
+  if(!"artist" %in% colnames(allfiles)){
+    metadata_dfr$artist <- NA_character_
+  }
   
   allfiles <- cbind(allfiles,metadata_dfr)
   
@@ -257,7 +248,9 @@ create_inputfiles <- function(
   
   # Includes the chapter name in the lines
   allfiles$lines <- purrr::map2(allfiles$lines,allfiles$song_header,function(song_rl,song_header){
-    c(song_header,
+    c(
+      "<!-- # Generated by songbokdown: do not edit by hand -->",
+      song_header,
       "",
       song_rl
     )
@@ -308,31 +301,35 @@ create_inputfiles <- function(
   subfolders_dfr %>%
     dplyr::mutate(filename = paste0(mypad(i,npad1),mypad(0,npad2),folder,".Rmd")) %>%
     dplyr::select(chapter,filename) %>%
-    purrr::map(function(chapter,filename){
+    purrr::pmap(function(chapter,filename){
       writeLines(paste("#",chapter),
                  file.path(rmd_subdir,filename))
     })
   
   
-  glossary_filename <- paste0(mypad(max(subfolders_dfr$i) + 1,npad1),mypad(0,npad2),"glossary.Rmd")
-  
-  
-  glossary_keywords <- c("title", "subtitle", "artist", "composer", "lyricist", "album")
-  glossary_keywords <- glossary_keywords[glossary_keywords %in% colnames(allfiles)]
-  glossary_df <- allfiles[,c(glossary_keywords,"song_tag")] %>%
-    tidyr::pivot_longer(-c(song_tag,title)) %>%
-    dplyr::filter(!is.na(value)) %>%
-    dplyr::mutate(
-      title = paste0("*",title,"*"),
-      value = paste0(value, " - ",title)
-    ) %>%
-    dplyr::select(-name) %>%
-    tidyr::pivot_longer(c(title,value)) %>%
-    dplyr::select(-name) %>%
-    dplyr::arrange(stringr::str_remove(value,"\\*"))
-  
   if(glossary){
-    c("# Glossary",
+    
+    glossary_filename <- paste0(mypad(max(subfolders_dfr$i) + 1,npad1),mypad(0,npad2),"glossary.Rmd")
+    
+    
+    glossary_keywords <- c("title", "subtitle", "artist", "composer", "lyricist", "album")
+    glossary_keywords <- glossary_keywords[glossary_keywords %in% colnames(allfiles)]
+    glossary_df <- allfiles[,c(glossary_keywords,"song_tag")] %>%
+      tidyr::pivot_longer(-c(song_tag,title)) %>%
+      dplyr::filter(!is.na(value)) %>%
+      dplyr::mutate(
+        title = paste0("*",title,"*"),
+        value = paste0(value, " - ",title)
+      ) %>%
+      dplyr::select(-name) %>%
+      tidyr::pivot_longer(c(title,value)) %>%
+      dplyr::select(-name) %>%
+      dplyr::arrange(stringr::str_remove(value,"\\*"))
+    
+    
+    c(
+      "<!-- # Generated by songbokdown: do not edit by hand -->",
+      "# Glossary",
       "",
       "```{r, echo = FALSE}",
       "output_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')",
@@ -343,7 +340,4 @@ create_inputfiles <- function(
     ) %>%
       writeLines(file.path(rmd_subdir,glossary_filename))
   }
-  
-  
-  
 }

@@ -5,17 +5,16 @@
 \title{Create the rmd files}
 \usage{
 create_inputfiles(
-  input = ".",
-  songbook_yamlfile = file.path(input, "_songbookdown.yml"),
-  bookdown_yamlfile = file.path(input, "_bookdown.yml")
+  input = getwd(),
+  songbook_yamlfile = list.files(pattern = "_songbookdown.ya*ml"),
+  bookdown_yamlfile = list.files(pattern = "_bookdown.ya*ml")
 )
 }
 \arguments{
 \item{input}{a folder}
 
-\item{songbook_yamlfile}{the songbook yaml file containing the songbook metadata}
-
-\item{bookdown_yamlfile}{the bookdown yaml file containing the bookdown metadata}
+\item{songbook_yamlfile, bookdown_yamlfile}{the songbook- / bookdown- yamlfile containing
+yaml the songbook metadata. Must be relative to the input.}
 }
 \value{
 A batch of Rmd Files which can be used to create the songbook.
