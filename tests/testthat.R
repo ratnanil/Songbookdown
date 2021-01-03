@@ -1,4 +1,5 @@
 library(testthat)
-library(Songbookdown)
+library(songbookdown)
 
-test_check("Songbookdown")
+test_check("songbookdown")
+
