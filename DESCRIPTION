@@ -1,6 +1,6 @@
 Package: songbookdown
 Title: An easy and flexible way to create songbooks
-Version: 0.0.0.9002
+Version: 0.0.0.9003
 Date: 2021-01-04
 Authors@R: person(given = "Nils", family = "Ratnaweera", role =
         c("aut", "cre"), email = "nils@ratnaweera.net")

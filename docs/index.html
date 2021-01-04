@@ -12,9 +12,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="An easy and flexible way to create songbooks">
-<meta property="og:description" content="This package provides functionality to easily create a Songbook.
-  It relies heavily on bookdown, which itself relies on knitr and pandoc to 
-  create a variaty of output formats, ranging from html over pdf to docx and epub.">
+<meta property="og:description" content="This package provides functionality to easily create a
+        Songbook. It relies heavily on bookdown, which itself relies on
+        knitr and pandoc to create a variaty of output formats, ranging
+        from html over pdf to docx and epub.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -33,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">songbookdown</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9002</span>
       </span>
     </div>
 
@@ -61,9 +62,14 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-This package provides functionality to easily create a Songbook.
-  It relies heavily on bookdown, which itself relies on knitr and pandoc to 
-  create a variaty of output formats, ranging from html over pdf to docx and epub.
+<div id="r-package-songbookdown" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#r-package-songbookdown" class="anchor"></a>R Package <code>songbookdown</code>
+</h1></div>
+<p>This package uses <a href="https://bookdown.org/yihui/bookdown/"><code>bookdown</code></a> to turn plain text files into a songbook. Since it’s using bookdown, a plethora of output formats are are available: beautiful html sites, pdf documents, docx files and epub just to name a few of them. Check the <a href="https://bookdown.org/yihui/bookdown/"><code>bookdown</code> documentation</a>(<a href="https://bookdown.org/yihui/bookdown/output-formats.html" class="uri">https://bookdown.org/yihui/bookdown/output-formats.html</a>) for more information on this.</p>
+<p>The key concept behind this package is the following: You copy and paste plain text lyrics (with or without guitar chord information) from a site like <a href="https://www.ultimate-guitar.com/" class="uri">https://www.ultimate-guitar.com/</a> or similar<sup>1</sup> and save it as “songname.txt” within a R-Project. You then add some metadata to this song using a yaml-style header. The <code>songbook</code> package then uses these songs to generate the input files that can be used by <code>bookdown</code> to create a songbook.</p>
+<p><sup>1</sup> Remember to mention the source!</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
