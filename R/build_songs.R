@@ -121,9 +121,6 @@ create_inputfiles <- function(
   ){
   
   ## Get settings from yaml ####################################################
-  
-  print(paste("reading",songbook_yamlfile))
-  print(file.exists(songbook_yamlfile))
   songbookdownyaml <- yaml::read_yaml(songbook_yamlfile)
   bookdownyaml <- yaml::read_yaml(bookdown_yamlfile)
   
