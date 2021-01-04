@@ -19,7 +19,11 @@ create_template <- function(folder = ".") {
   input_folder <- "songs_raw"
   input_folder_full <- file.path(folder,input_folder)
   
+  rmd_folder <- "rmd"
+  rmd_folder_full <- file.path(folder,rmd_folder)
+  
   dir.create(input_folder_full)
+  dir.create(rmd_folder_full)
   
   path1 <- file.path(input_folder_full,"classics")
   dir.create(path1)

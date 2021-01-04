@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">songbookdown</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9003</span>
       </span>
     </div>
 
@@ -49,6 +49,18 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/faq.html">faq</a>
+    </li>
+  </ul>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
 </div>
@@ -62,14 +74,39 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
+
 <div id="r-package-songbookdown" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#r-package-songbookdown" class="anchor"></a>R Package <code>songbookdown</code>
 </h1></div>
-<p>This package uses <a href="https://bookdown.org/yihui/bookdown/"><code>bookdown</code></a> to turn plain text files into a songbook. Since it’s using bookdown, a plethora of output formats are are available: beautiful html sites, pdf documents, docx files and epub just to name a few of them. Check the <a href="https://bookdown.org/yihui/bookdown/"><code>bookdown</code> documentation</a>(<a href="https://bookdown.org/yihui/bookdown/output-formats.html" class="uri">https://bookdown.org/yihui/bookdown/output-formats.html</a>) for more information on this.</p>
-<p>The key concept behind this package is the following: You copy and paste plain text lyrics (with or without guitar chord information) from a site like <a href="https://www.ultimate-guitar.com/" class="uri">https://www.ultimate-guitar.com/</a> or similar<sup>1</sup> and save it as “songname.txt” within a R-Project. You then add some metadata to this song using a yaml-style header. The <code>songbook</code> package then uses these songs to generate the input files that can be used by <code>bookdown</code> to create a songbook.</p>
-<p><sup>1</sup> Remember to mention the source!</p>
 </div>
+<div id="what-is-this-about" class="section level1">
+<h1 class="hasAnchor">
+<a href="#what-is-this-about" class="anchor"></a>What is this about?</h1>
+<p>This package uses <a href="https://bookdown.org/yihui/bookdown/"><code>bookdown</code></a> to turn plain text files into a songbook. Since it’s using <code>bookdown</code>, a plethora of output formats are are available: beautiful html sites, pdf documents, docx files and epub just to name a few of them. Check the <a href="https://bookdown.org/yihui/bookdown/"><code>bookdown</code> documentation</a>(<a href="https://bookdown.org/yihui/bookdown/output-formats.html" class="uri">https://bookdown.org/yihui/bookdown/output-formats.html</a>) for more information on this.</p>
+<p>The key concept behind this package is the following: You copy and paste plain text lyrics (with or without guitar chord information) from a site like <a href="https://www.ultimate-guitar.com/" class="uri">https://www.ultimate-guitar.com/</a> or similar<sup>1</sup> and save it as “songname.txt” within an R-Project. You then add some metadata to this song using a yaml-style header. The <code>songbook</code> package then uses these textfiles to generate intermediate files that in turn will be used by <code>bookdown</code> to create a songbook.</p>
+<p>Just as <code>knitr</code> leverages pandoc (see image below), <code>songbookdown</code> leverages <code>bookdown</code> and the rest of the tools to build an awesome songbook.</p>
+<p><sup>1</sup> Remember to mention the source!</p>
+<p><img src="https://bookdown.org/yihui/rmarkdown-cookbook/images/workflow.png"></p>
+<div id="why-use-songbookdown" class="section level2">
+<h2 class="hasAnchor">
+<a href="#why-use-songbookdown" class="anchor"></a>Why use <code>songbookdown</code>?</h2>
+<p>The package offers a way to specify typical song related metadata in a simple and structured way without thinking about how this metadata is used and displayed in the output. Such song related data can be title of the song, artist, tempo etc.</p>
+</div>
+<div id="installing-songbookdown" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installing-songbookdown" class="anchor"></a>Installing <code>songbookdown</code>
+</h2>
+<p>The package is not on CRAN, so to install <code>songbookdown</code> use <code>devtools</code> or <code>remotes</code> and install it from github like so:</p>
+<pre><code><a href="https://devtools.r-lib.org//reference/remote-reexports.html">devtools::install_github("ratnanil/songbookdown")</a></code></pre>
+</div>
+<div id="warning" class="section level2">
+<h2 class="hasAnchor">
+<a href="#warning" class="anchor"></a>Warning!</h2>
+<p>This package is still under development. Things will most likely break, contact me if you are interested in using it, then I will try and be more careful :-)</p>
+</div>
+</div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
