@@ -178,7 +178,7 @@ create_inputfiles <- function(
       dplyr::mutate_all(~as.character(.))
   })
   
-  if(!"artist" %in% colnames(allfiles)){
+  if(!"artist" %in% colnames(metadata_dfr)){
     metadata_dfr$artist <- NA_character_
   }
   
