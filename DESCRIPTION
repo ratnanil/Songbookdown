@@ -1,28 +1,18 @@
 Package: songbookdown
 Title: An easy and flexible way to create songbooks
-Version: 0.0.0.9000
-Authors@R: 
-    person(given = "Nils",
-           family = "Ratnaweera",
-           role = c("aut", "cre"),
-           email = "nils@ratnaweera.net")
-Description: This package provides functionality to easily create a Songbook.
-  It relies heavily on bookdown, which itself relies on knitr and pandoc to 
-  create a variaty of output formats, ranging from html over pdf to docx and epub.
+Version: 0.0.0.9001
+Date: 2021-01-04
+Authors@R: person(given = "Nils", family = "Ratnaweera", role =
+        c("aut", "cre"), email = "nils@ratnaweera.net")
+Description: This package provides functionality to easily create a
+        Songbook. It relies heavily on bookdown, which itself relies on
+        knitr and pandoc to create a variaty of output formats, ranging
+        from html over pdf to docx and epub.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Imports: 
-    stringr,
-    dplyr,
-    purrr,
-    yaml,
-    glue,
-    tidyr,
-    magrittr,
-    kableExtra,
-    knitr
-Suggests: 
-    testthat
+Imports: stringr, dplyr, purrr, yaml, glue, tidyr, magrittr,
+        kableExtra, knitr
+Suggests: testthat
