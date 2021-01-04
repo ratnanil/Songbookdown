@@ -3,4 +3,5 @@
 export("%>%")
 export(create_inputfiles)
 export(create_template)
+export(replace_edit_url)
 importFrom(magrittr,"%>%")
